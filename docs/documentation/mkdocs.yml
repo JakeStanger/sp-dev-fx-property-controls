@@ -2,14 +2,16 @@ site_name: '@pnp/spfx-property-controls'
 nav:
   - Home: 'index.md'
   - Controls:
+    - PropertyFieldButton: 'controls/PropertyFieldButton.md'
     - PropertyFieldCodeEditor: 'controls/PropertyFieldCodeEditor.md'
     - PropertyFieldCollectionData: 'controls/PropertyFieldCollectionData.md'
-    - PropertyFieldColorPicker: 'controls/PropertyFieldColorPicker.md',
-    - PropertyFieldColumnPicker: 'controls/PropertyFieldColumnPicker.md',
+    - PropertyFieldColorPicker: 'controls/PropertyFieldColorPicker.md'
+    - PropertyFieldColumnPicker: 'controls/PropertyFieldColumnPicker.md'
     - PropertyFieldDateTimePicker: 'controls/PropertyFieldDateTimePicker.md'
     - PropertyFieldEnterpriseTermPicker: 'controls/PropertyFieldEnterpriseTermPicker.md'
     - PropertyFieldFilePicker: 'controls/PropertyFieldFilePicker.md'
     - PropertyFieldFolderPicker: 'controls/PropertyFieldFolderPicker.md'
+    - PropertyFieldGrid: 'controls/PropertyFieldGrid.md'
     - PropertyFieldGuidPicker: 'controls/PropertyFieldGuid.md'
     - PropertyFieldIconPicker: 'controls/PropertyFieldIconPicker.md'
     - PropertyFieldListPicker: 'controls/PropertyFieldListPicker.md'

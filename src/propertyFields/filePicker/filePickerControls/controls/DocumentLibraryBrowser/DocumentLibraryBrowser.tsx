@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
-import { List } from 'office-ui-fabric-react/lib/List';
-import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { FocusZone } from '@fluentui/react/lib/FocusZone';
+import { List } from '@fluentui/react/lib/List';
+import { Spinner } from '@fluentui/react/lib/Spinner';
+import { Image, ImageFit } from '@fluentui/react/lib/Image';
 import { IDocumentLibraryBrowserProps } from './IDocumentLibraryBrowserProps';
 import { IDocumentLibraryBrowserState } from './IDocumentLibraryBrowserState';
 import { ILibrary } from '../../../../../services/FileBrowserService.types';
 
-import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { IRectangle } from '@fluentui/react/lib/Utilities';
+import { DefaultButton } from '@fluentui/react/lib/Button';
 
 import styles from './DocumentLibraryBrowser.module.scss';
 import * as strings from 'PropertyControlStrings';
@@ -59,6 +59,19 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
       <div className={styles.documentLibraryBrowserContainer}>
         <FocusZone>
           <List
+            ref={(e: List) => {
+              const needToUpdate = !!e && !this._columnWidth;
+
+              //
+              // sometimes getItemCountForPage is called when surfaceRect is still has 0 width
+              // We need to rerender the list if that happens
+              //
+              if (needToUpdate) {
+                setTimeout(() => {
+                  e.forceUpdate();
+                }, 0);
+              }
+            }}
             className={styles.filePickerFolderCardGrid}
             items={libraries}
             getItemCountForPage={this._getItemCountForPage}
@@ -75,7 +88,7 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
    * Calculates how many items there should be in the page
    */
   private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
-    if (itemIndex === 0) {
+    if (itemIndex === 0 && surfaceRect.width > 0) {
       this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
       this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
       this._rowHeight = this._columnWidth;

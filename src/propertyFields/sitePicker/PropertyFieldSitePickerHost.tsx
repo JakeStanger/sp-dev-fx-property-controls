@@ -3,15 +3,15 @@ import { IPropertyFieldSitePickerHostProps, ISitePickerState } from './IProperty
 import SPSiteSearchService from '../../services/SPSiteSearchService';
 import FieldErrorMessage from '../errorMessage/FieldErrorMessage';
 import * as telemetry from '../../common/telemetry';
-import { Label } from 'office-ui-fabric-react/lib/Label';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { Label } from '@fluentui/react/lib/Label';
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import * as strings from 'PropertyControlStrings';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import { IPropertyFieldSite } from './IPropertyFieldSitePicker';
 import { PropertyFieldSitePickerListItem } from './PropertyFieldSitePickerListItem/PropertyFieldSitePickerListItem';
 import styles from './PropertyFieldSitePickerHost.module.scss';
 import { initializeIcons } from '@uifabric/icons';
-import { Async } from '@uifabric/utilities/lib';
+import { Async } from '@fluentui/react/lib/Utilities';
 
 export default class PropertyFieldSitePickerHost extends React.Component<IPropertyFieldSitePickerHostProps, ISitePickerState> {
   private searchService: SPSiteSearchService;
@@ -90,6 +90,7 @@ export default class PropertyFieldSitePickerHost extends React.Component<IProper
       <div>
         {this.props.label && <Label>{this.props.label}</Label>}
         <SearchBox
+          disabled={this.props.disabled}
           placeholder={strings.SitePickerSearchBoxPlaceholder}
           onChanged={this.async.debounce(this.onSearchFieldChange, this.props.deferredValidationTime)}
         />

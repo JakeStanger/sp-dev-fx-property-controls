@@ -27,3 +27,5 @@ export * from './PropertyFieldFolderPicker';
 
 export * from './PropertyFieldColumnPicker';
 export * from './PropertyFieldMonacoEditor';
+export * from './PropertyFieldMessage';
+export * from './PropertyFieldButton';

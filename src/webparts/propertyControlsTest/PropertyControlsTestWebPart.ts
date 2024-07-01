@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
-import { MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
-import { SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import {
-  DayOfWeek,
-} from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
 import * as strings from 'PropertyControlsTestWebPartStrings';
 
+import { PanelType } from '@fluentui/react';
+import { DocumentBulletListRegular } from '@fluentui/react-icons';
+import { DayOfWeek } from '@fluentui/react/lib/DateTimeUtilities';
+import { MessageBarType } from '@fluentui/react/lib/MessageBar';
+import { SpinnerSize } from '@fluentui/react/lib/Spinner';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
@@ -18,6 +18,7 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import { PropertyPaneHelpers } from '../../helpers';
 import { PropertyFieldMonacoEditor } from '../../PropertyFiedMonacoEditor';
+import { PropertyFieldButton } from '../../PropertyFieldButton';
 import {
   PropertyFieldButtonWithCallout,
 } from '../../PropertyFieldButtonWithCallout';
@@ -40,6 +41,10 @@ import {
   PropertyFieldColumnPicker,
   PropertyFieldColumnPickerOrderBy,
 } from '../../PropertyFieldColumnPicker';
+import {
+  PropertyFieldContentTypeOrderBy,
+  PropertyFieldContentTypePicker,
+} from '../../PropertyFieldContentTypePicker';
 import {
   DateConvention,
   PropertyFieldDateTimePicker,
@@ -97,6 +102,8 @@ import {
 import {
   PropertyPanePropertyEditor,
 } from '../../propertyFields/propertyEditor/PropertyPanePropertyEditor';
+import { PropertyFieldGrid } from '../../propertyFields/propertyFieldGrid';
+import { IItem } from '../../propertyFields/propertyFieldGrid/grid/IItem';
 import { PropertyFieldTeamPicker } from '../../propertyFields/teamPicker';
 import {
   PropertyFieldEnterpriseTermPicker,
@@ -139,11 +146,44 @@ import {
  */
 export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<IPropertyControlsTestWebPartProps> {
   private multiSelectProps = [];
+ private showMessageButton = false;
+ private gridItems:IItem[] = [
+    {
+      key: "1",  
+      icon: React.createElement(DocumentBulletListRegular) ,
+        title: "File 1",
+        description: "This is the first document"
+    },
+    {
+      key: "2",
+      icon: React.createElement(DocumentBulletListRegular) ,
+      title: "File 2",
+      description: "This is the first document"
+  },
+  {
+    key: "3",
+    icon: React.createElement(DocumentBulletListRegular) ,
+    title: "File 3",
+    description: "This is the first document"
+},  
+{
+  key: "4",
+  icon: React.createElement(DocumentBulletListRegular) ,
+  title: "File 4",
+  description: "This is the first document"
+}
+ ];
 
  protected monacoChange = (newValue: string, validationErrors: string[]) => {
    console.log('teste',newValue);
 
   }
+
+  protected onPropertyPaneFieldChanged(propertyPath: string, oldValue: any, newValue: any): void {
+    console.log("PropertyPaneFieldChanged", propertyPath, oldValue, newValue);
+  }
+
+   
 
   public render(): void {
     this.properties.monacoEditor = "";
@@ -156,6 +196,7 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
         people: this.properties.people || [],
         list: this.properties.singleList as string || "",
         listFiltered: this.properties.singleListFiltered || "",
+        singleListMultipleBaseTemplate: this.properties.singleListMultipleBaseTemplate || "",
         view: this.properties.view,
         column: this.properties.column,
         multiColumn: this.properties.multiColumn,
@@ -189,6 +230,8 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
         iconPicker: this.properties.iconPicker,
         editableComboBox: this.properties.editableComboBox,
         monacoEditor:  this.properties.monacoEditor,
+        contentType : this.properties.contentType,
+        gridItems :this.properties.gridItems  || [],
       }
     );
 
@@ -380,6 +423,10 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
                   disableItemCreation: false,
                   panelClassName: "MyAwesomePanelClassName",
                   tableClassName: "MyAwesomeTableClassName",
+                  panelProps: {
+                    type: PanelType.extraLarge,
+                    layerProps: {eventBubblingEnabled: true}                                        
+                  },
                   fields: [
                     {
                       id: "Title",
@@ -631,6 +678,19 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
                   webAbsoluteUrl: this.properties.siteUrl || this.context.pageContext.web.absoluteUrl,
                   listsToExclude: ["cdn"],
                 }),
+                PropertyFieldListPicker('singleListMultipleBaseTemplate', {
+                  label: 'Select a list (Multiple base template)',
+                  selectedList: this.properties.singleListMultipleBaseTemplate,
+                  baseTemplate: [101, 106, 107],
+                  orderBy: PropertyFieldListPickerOrderBy.Title,
+                  disabled: false,
+                  onPropertyChange: this.onPropertyPaneFieldChanged.bind(this),
+                  properties: this.properties,
+                  context: this.context,
+                  deferredValidationTime: 0,
+                  key: 'singleListMultipleBaseTemplateId',
+                  webAbsoluteUrl: this.properties.siteUrl || this.context.pageContext.web.absoluteUrl,
+                }),
                 PropertyFieldListPicker('singleListFiltered', {
                   label: 'Select a list (Filtered)',
                   selectedList: this.properties.singleListFiltered,
@@ -655,6 +715,21 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
                     console.log("Lists", lists);
                     return lists;
                   }
+                }),
+
+                PropertyFieldContentTypePicker('contentType', {
+                  label: 'Select a Content Type',
+                  context: this.context,
+                  selectedContentType: this.properties.contentType,
+                  //listId: "0da3b4b7-8ebd-4f15-87ee-afae5cacadad",//this.properties.singleListFiltered,//"03B3B5BC-8F37-4E9F-B9CF-0B13C5B5E8B8",
+                  disabled: false,
+                  //webAbsoluteUrl:"https://pm3q.sharepoint.com/sites/PnPDemo",
+                  orderBy: PropertyFieldContentTypeOrderBy.Name,
+                  onPropertyChange: this.onPropertyPaneFieldChanged.bind(this),
+                  properties: this.properties,
+                  onGetErrorMessage: null,
+                  deferredValidationTime: 0,
+                  key: 'contentTypePickerFieldId'
                 }),
                 PropertyFieldViewPicker('view', {
                   label: 'Select a view',
@@ -758,7 +833,8 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
                   onPropertyChange: this.onPropertyPaneFieldChanged,
                   properties: this.properties,
                   key: 'sitesFieldId',
-                  trimDuplicates: true
+                  trimDuplicates: true,
+                  disabled: false
                 }),
                 PropertyFieldTeamPicker('teams', {
                   key: 'teamsPicker',
@@ -832,8 +908,10 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
                   //iconName: 'FangBody',
                   key: 'swatchColorFieldId'
                 }),
+               
               ]
             },
+             
             {
               groupName: "Controls with callout",
               isCollapsed: true,
@@ -1044,6 +1122,36 @@ export default class PropertyControlsTestWebPart extends BaseClientSideWebPart<I
                   label: "File Picker",
                   includePageLibraries: true
                 }),
+                PropertyFieldButton('fakeProperty', {
+                  key: 'buttonFieldId',
+                  text: 'Button' ,
+                  onClick: () => { this.showMessageButton = !this.showMessageButton; this.context.propertyPane.refresh(); },
+                  isVisible: true,
+                  isPrimary: true,
+                  disabled: true
+                }),
+                 PropertyFieldMessage("message", {
+                  key: "0",
+                  text: "Button clickd Completed!",
+                  messageType:
+                    MessageBarType.success,
+                  isVisible: this.showMessageButton 
+                 }), 
+                 PropertyFieldGrid('gridItems', {
+                  multiSelect: true,
+                  items: this.gridItems,
+                  label: 'Grid Items',
+                  key: 'gridFieldId',
+                  defaultSelectedItems: this.properties.gridItems,
+                  maxHeight: 500,
+                  column1Label: 'File',
+                  column2Label: 'Location',
+                  onSelected: (item: IItem[]) => {
+                    console.log(item);
+                 },
+                   
+                     
+                 }),
                 PropertyFieldIconPicker('iconPicker', {
                   currentIcon: this.properties.iconPicker,
                   key: "iconPickerId",

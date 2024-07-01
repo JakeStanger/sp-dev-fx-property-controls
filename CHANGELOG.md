@@ -1,5 +1,92 @@
 # Releases
 
+## 3.17.0
+
+### New control(s)
+
+- `PropertyFieldButton`:  New Control PropertyFieldButton [#613](https://github.com/pnp/sp-dev-fx-property-controls/pull/613)
+
+### Enhancements
+
+- `fast-serve`: ast-serve update to match the most recent changes. [#606](https://github.com/pnp/sp-dev-fx-property-controls/pull/606)
+- `PropertyFieldContentTypePicker`:  PropertyFieldContentTypePicker control [#611](https://github.com/pnp/sp-dev-fx-property-controls/pull/611)
+- `PropertyFieldFilePicker` : add a delete button to the selected file [#579](https://github.com/pnp/sp-dev-fx-property-controls/pull/#607)
+- `PropertyFieldFilePicker`: Fix root site org asset library showing no items in file picker (https://github.com/pnp/sp-dev-fx-property-controls/pull/603)
+- `PropertyFieldFolderPicker`: added siteAbsoluteUrl to FOlderPicker  (https://github.com/pnp/sp-dev-fx-property-controls/pull/602)
+
+### Fixes
+
+- `General Helper`: toRelativeUrl returns proper relative url in case of root site  (https://github.com/pnp/sp-dev-fx-property-controls/pull/609)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Daniel Lindén](https://github.com/daniellinden22), [Jake](https://github.com/jjkim11), [João Mendes](https://github.com/joaojmendes), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [ramonitor](https://github.com/ramonitor), [Russell gove](https://github.com/russgove), [Sergei Sergeev](https://github.com/s-KaiNet).
+
+## 3.16.0
+
+### Enhancements
+
+- `PropertyFieldSitePicker`: disabled property not implemented in UI [#577](https://github.com/pnp/sp-dev-fx-property-controls/issues/577)
+
+### Fixes
+
+- `PropertyFieldMonacoEditor` and `PropertyFieldCodeEditor`: fix text selection in code editor [#590](https://github.com/pnp/sp-dev-fx-property-controls/issues/590)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Luna Heyman](https://github.com/toodeluna), [srpmtt](https://github.com/srpmtt).
+
+## 3.15.1
+
+### Fixes
+
+- `PropertyFieldChoiceGroupWithCallout` deletes properties [#592](https://github.com/pnp/sp-dev-fx-property-controls/issues/592)
+
+## 3.15.0
+
+### Enhancements
+
+- SharePoint Framework v1.18.2 support
+
+### Fixes
+
+- `Localization`: Errors in en-gb loc file [#582](https://github.com/pnp/sp-dev-fx-property-controls/pull/582)
+- `Localization`: Errors in german language [#589](https://github.com/pnp/sp-dev-fx-property-controls/pull/589)
+- `PropertyFieldFilePicker`: fix Tiles view [#562](https://github.com/pnp/sp-dev-fx-property-controls/issues/562)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [andrew-lott](https://github.com/andrew-lott), [Clem S-K](https://github.com/ClemSK), [Tom F.](https://github.com/tpf89).
+
+## 3.14.0
+
+### Enhancements
+
+- `PropertyFieldListPicker`: Implemented functionality to select multiple base templates [#568](https://github.com/pnp/sp-dev-fx-property-controls/pull/568)
+- `fast-serve`: Fast-serve updated to the latest version and serve warnings fixed. [#579](https://github.com/pnp/sp-dev-fx-property-controls/pull/579)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Chandani Prajapati](https://github.com/chandaniprajapati), [Sergei Sergeev](https://github.com/s-KaiNet).
+
+## 3.13.0
+
+### Enhancements
+
+- `PropertyFieldCollectionData`: add `panelProps` property to collection data [#546](https://github.com/pnp/sp-dev-fx-property-controls/pull/546)
+- SharePoint Framework v1.17.1 support
+
+### Fixes
+
+- Italian localization updated [#549](https://github.com/pnp/sp-dev-fx-property-controls/pull/549)
+- Fixed multiple typos [#550](https://github.com/pnp/sp-dev-fx-property-controls/pull/550)
+- Swedish localization updated [#553](https://github.com/pnp/sp-dev-fx-property-controls/pull/553)
+- `PropertyPanePropertyEditor`: crash when property undefined/null [#552](https://github.com/pnp/sp-dev-fx-property-controls/pull/552)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Gitwey](https://github.com/Gitwey), [Jake Stanger](https://github.com/JakeStanger), [Luca3082](https://github.com/Luca3082), [Valeras Narbutas](https://github.com/ValerasNarbutas).
+
 ## 3.12.0
 
 ### Enhancements
